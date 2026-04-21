@@ -26,7 +26,24 @@ app.post('/tarefas', (req, res) => {
   tarefas.push(novaTarefa)
   res.status(201).json(novaTarefa)
 })
+         /*------PARTE DO DAVI------*/
+// PUT /tarefas/:id → atualiza uma tarefa existente
+app.put('/tarefas/:id', (req, res) => {
+  const { id } = req.params
+  const { titulo, concluida } = req.body
+
+  const tarefa = tarefas.find(t => t.id === parseInt(id))
+
+  if (!tarefa) {
+    return res.status(404).json({ mensagem: 'Tarefa não encontrada' })
+  }
+
+  if (titulo !== undefined) tarefa.titulo = titulo
+  if (concluida !== undefined) tarefa.concluida = concluida
+
+  res.json(tarefa)
+})
 
 app.listen(3000, () => {
   console.log('Servidor rodando em http://localhost:3000')
-})
+})M
